@@ -1,4 +1,5 @@
 from django import forms
+from django.forms.forms import get_declared_fields
 from django.contrib.gis.forms.fields import GeometryField
 
 from olwidget.widgets import Map, BaseVectorLayer, EditableLayer
@@ -54,7 +55,7 @@ class MapModelFormMetaclass(type):
         except NameError:
             # We are defining MapModelForm itself.
             parents = None
-        declared_fields = forms.models.get_declared_fields(bases, attrs, False)
+        declared_fields = get_declared_fields(bases, attrs, False)
         new_class = super(MapModelFormMetaclass, mcs).__new__(mcs, name, bases,
                 attrs)
         if not parents:
@@ -152,7 +153,8 @@ def apply_maps_to_modelform_fields(fields, maps, default_options=None,
         min_pos = 65535 # arbitrarily high number for field ordering
         initial = []
         for field_name in field_list:
-            min_pos = min(min_pos, fields.keyOrder.index(field_name))
+            key_order = fields.keyOrder if hasattr(fields, "keyOrder") else list(fields)
+            min_pos = min(min_pos, key_order.index(field_name))
             field = fields.pop(field_name)
             initial.append(field_name)
             if not isinstance(field.widget, (Map, BaseVectorLayer)):
@@ -170,7 +172,16 @@ def apply_maps_to_modelform_fields(fields, maps, default_options=None,
             map_field = default_field_class(layer_fields, map_opts, layer_names=names,
                 label=", ".join(forms.forms.pretty_name(f) for f in field_list),
                 template=template)
-        fields.insert(min_pos, map_name, map_field)
+        if hasattr(fields, "insert"):
+            fields.insert(min_pos, map_name, map_field)
+        else:
+            fields_copy = fields.copy()
+            fields.clear()
+            od_pos = 0
+            for od_item in fields_copy.items():
+                if od_pos == min_pos: fields[map_name] = map_field
+                od_pos += 1
+                fields[od_item[0]] = od_item[1]
         initial_data_keymap[map_name] = initial
     return initial_data_keymap
 

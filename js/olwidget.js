@@ -74,11 +74,11 @@ var olwidget = {
         mapnik: function() {
             // Not using OpenLayers.Layer.OSM.Mapnik constructor because of
             // an IE6 bug.  This duplicates that constructor.
-            return new OpenLayers.Layer.OSM("OpenStreetMap (Mapnik)",
+            return new OpenLayers.Layer.OSM("Vectoriel",
                     [
-                        "http://a.tile.openstreetmap.org/${z}/${x}/${y}.png",
-                        "http://b.tile.openstreetmap.org/${z}/${x}/${y}.png",
-                        "http://c.tile.openstreetmap.org/${z}/${x}/${y}.png"
+                        "https://a.tile.openstreetmap.org/${z}/${x}/${y}.png",
+                        "https://b.tile.openstreetmap.org/${z}/${x}/${y}.png",
+                        "https://c.tile.openstreetmap.org/${z}/${x}/${y}.png"
                     ],
                     { numZoomLevels: 19 });
         }
@@ -104,7 +104,7 @@ var olwidget = {
                         numZoomLevels: 22});
         },
         hybrid: function() {
-            return new OpenLayers.Layer.Google("Google Hybrid",
+            return new OpenLayers.Layer.Google("Satellite et plan incliné",
                     {sphericalMercator: true, type: google.maps.MapTypeId.HYBRID, numZoomLevels: 20});
         }
     },
