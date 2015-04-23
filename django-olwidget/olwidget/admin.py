@@ -30,6 +30,11 @@ from django.contrib.admin import ModelAdmin
 from django.contrib.gis.geos import GeometryCollection
 from django.contrib.admin.options import csrf_protect_m
 from django.utils.encoding import force_unicode
+from django.utils.translation import ungettext
+from django.utils.translation import gettext as _
+from django.core.exceptions import PermissionDenied
+from django.template import RequestContext
+from django.shortcuts import render_to_response
 
 from olwidget.forms import apply_maps_to_modelform_fields, fix_initial_data, fix_cleaned_data
 from olwidget.widgets import InfoMap
@@ -240,7 +245,7 @@ class GeoModelAdmin(ModelAdmin):
             context['map'] = map_
         # END MODIFICATION
 
-        context_instance = template.RequestContext(request, current_app=self.admin_site.name)
+        context_instance = RequestContext(request, current_app=self.admin_site.name)
         return render_to_response(self.change_list_template or [
             'admin/%s/%s/change_list.html' % (app_label, opts.object_name.lower()),
             'admin/%s/change_list.html' % app_label,
