@@ -27,6 +27,7 @@ A complete list of options is in the olwidget documentation.
 """
 
 from django.contrib.admin import ModelAdmin
+from django.contrib.admin.options import IncorrectLookupParameters
 from django.contrib.gis.geos import GeometryCollection
 from django.contrib.admin.options import csrf_protect_m
 from django.utils.encoding import force_unicode
