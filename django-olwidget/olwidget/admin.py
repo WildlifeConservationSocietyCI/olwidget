@@ -36,6 +36,7 @@ from django.utils.translation import gettext as _
 from django.core.exceptions import PermissionDenied
 from django.template import RequestContext
 from django.shortcuts import render_to_response
+from django.http import HttpResponseRedirect
 
 from olwidget.forms import apply_maps_to_modelform_fields, fix_initial_data, fix_cleaned_data
 from olwidget.widgets import InfoMap
