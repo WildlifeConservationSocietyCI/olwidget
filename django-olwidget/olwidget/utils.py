@@ -1,4 +1,5 @@
 import re
+from functools import reduce
 
 from django.conf import settings
 from django.contrib.gis.geos import GEOSGeometry

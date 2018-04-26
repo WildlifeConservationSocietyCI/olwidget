@@ -30,7 +30,7 @@ api_defaults = {
     'OLWIDGET_CSS': utils.url_join(settings.OLWIDGET_STATIC_URL, "css/olwidget.css"),
 }
 
-for key, default in api_defaults.iteritems():
+for key, default in api_defaults.items():
     if not hasattr(settings, key):
         setattr(settings, key, default)
 

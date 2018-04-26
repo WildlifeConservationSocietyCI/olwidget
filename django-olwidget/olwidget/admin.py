@@ -34,7 +34,6 @@ from django.contrib.admin import helpers
 from django.contrib import messages
 from django.utils.encoding import force_text
 from django.http import HttpResponseRedirect
-from django.utils.encoding import force_unicode
 from django.utils.translation import ungettext
 from django.utils.translation import gettext as _
 from django.core.exceptions import PermissionDenied
@@ -115,7 +114,7 @@ class GeoModelAdmin(ModelAdmin):
                         GeometryCollection(geoms, srid=int(DEFAULT_PROJ)),
                         "<a href='%s'>%s</a>" % (
                             cl.url_for_result(obj),
-                            force_unicode(obj)
+                            force_text(obj)
                         )
                     ))
 
