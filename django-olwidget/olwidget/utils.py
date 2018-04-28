@@ -27,7 +27,7 @@ def _reduce_url_parts(a, b):
 
 def translate_options(options):
     translated = {}
-    for key, value in options.iteritems():
+    for key, value in options.items():
         new_key = _separated_lowercase_to_lower_camelcase(key)
         # recurse
         if isinstance(value, dict):

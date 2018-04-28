@@ -22,7 +22,7 @@ def get_declared_fields(bases, attrs, with_base_fields=True):
     """
     fields = [
         (field_name, attrs.pop(field_name))
-        for field_name, obj in list(six.iteritems(attrs)) if isinstance(obj, Field)
+        for field_name, obj in list(six.items(attrs)) if isinstance(obj, Field)
     ]
     fields.sort(key=lambda x: x[1].creation_counter)
 
@@ -32,11 +32,11 @@ def get_declared_fields(bases, attrs, with_base_fields=True):
     if with_base_fields:
         for base in bases[::-1]:
             if hasattr(base, 'base_fields'):
-                fields = list(six.iteritems(base.base_fields)) + fields
+                fields = list(six.items(base.base_fields)) + fields
     else:
         for base in bases[::-1]:
             if hasattr(base, 'declared_fields'):
-                fields = list(six.iteritems(base.declared_fields)) + fields
+                fields = list(six.items(base.declared_fields)) + fields
 
     return OrderedDict(fields)
 
@@ -134,13 +134,13 @@ def fix_initial_data(initial, initial_data_keymap):
     Used for rearranging initial data in fields to match declared maps.
     """
     if initial:
-        for dest, sources in initial_data_keymap.iteritems():
+        for dest, sources in initial_data_keymap.items():
             data = [initial.pop(s, None) for s in sources]
             initial[dest] = data
     return initial
 
 def fix_cleaned_data(cleaned_data, initial_data_keymap):
-    for group, keys in initial_data_keymap.iteritems():
+    for group, keys in initial_data_keymap.items():
         if cleaned_data.has_key(group):
             vals = cleaned_data.pop(group)
             if isinstance(vals, (list, tuple)):
@@ -159,7 +159,7 @@ def apply_maps_to_modelform_fields(fields, maps, default_options=None,
     """
     if default_field_class is None:
         default_field_class = MapField
-    map_field_names = (name for name,field in fields.iteritems() if isinstance(field, (MapField, GeometryField)))
+    map_field_names = (name for name,field in fields.items() if isinstance(field, (MapField, GeometryField)))
     if not maps:
         maps = [((name,),) for name in map_field_names]
     elif isinstance(maps, dict):
