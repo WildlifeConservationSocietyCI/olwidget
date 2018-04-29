@@ -263,7 +263,7 @@ class InfoLayer(BaseVectorLayer):
                 wkt_array.append([wkt, attr])
         info_json = json.dumps(wkt_array)
 
-        if name and not self.options.has_key('name'):
+        if name and not 'name' in self.options:
             self.options['name'] = forms.forms.pretty_name(name)
 
         context = {
@@ -292,7 +292,7 @@ class EditableLayer(BaseVectorLayer):
     def prepare(self, name, value, attrs=None):
         if not attrs:
             attrs = {}
-        if name and not self.options.has_key('name'):
+        if name and not 'name' in self.options:
             self.options['name'] = forms.forms.pretty_name(name)
         attrs['id'] = attrs.get('id', "id_%s" % id(self))
 
