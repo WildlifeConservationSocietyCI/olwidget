@@ -62,7 +62,7 @@ class Map(forms.Widget):
         self.template = template or self.default_template
         super(Map, self).__init__()
 
-    def render(self, name, value, attrs=None):
+    def render(self, name, value, attrs=None, renderer=None):
         if value is None:
             values = [None for i in range(len(self.vector_layers))]
         elif not isinstance(value, (list, tuple)):
@@ -215,7 +215,7 @@ class BaseVectorLayer(forms.Widget):
         """
         raise NotImplementedError
 
-    def render(self, name, value, attrs=None):
+    def render(self, name, value, attrs=None, renderer=None):
         """
         Return just the javascript component of this widget.  To also get the
         HTML component, call ``prepare``.
